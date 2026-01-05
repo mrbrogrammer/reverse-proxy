@@ -8,7 +8,7 @@ Reverse proxies are typically implemented to help increase security, performan
 
 ![](https://github.com/mrbrogrammer/reverse-proxy/blob/main/fig01.png)
 
-Below we outline some of the benefits of a reverse proxy:
+Below I outline some of the benefits of a reverse proxy:
 
 * Load balancing - control traffic
 * Protection from attacks
