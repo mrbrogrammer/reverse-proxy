@@ -6,6 +6,7 @@ With a reverse proxy, when clients send requests to the origin server of a websi
 
 Reverse proxies are typically implemented to help increase security, performance, and reliability. 
 
+![](https://github.com/mrbrogrammer/reverse-proxy/blob/main/fig01.png)
 
 Below we outline some of the benefits of a reverse proxy:
 
