@@ -1,6 +1,8 @@
 FROM python:3.8
 
-COPY ./* .
+COPY requirements.txt .
+
+COPY server.py .
 
 EXPOSE 8000
 
