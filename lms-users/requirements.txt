@@ -1,1 +1,1 @@
-pyhton-decouple
+python-decouple
