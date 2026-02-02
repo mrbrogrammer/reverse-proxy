@@ -3,17 +3,38 @@ from fastapi import APIRouter, Depends
 from service.user_service import UserService
 from domain.dto.user_dto import UserDTO
 from pydantic import BaseModel
+from typing import List
+from fastapi import HTTPException, Depends
+from sqlalchemy.orm import Session
+from starlette import status
+from domain.dto import user_dto
+from domain.dto import user_dto
+from domain.user import User
+from fastapi import APIRouter
+from repository.user_repository import UserRepository
+from config.database import get_db
 
 router = APIRouter(tags=["users"])
 
 def get_user_service():
-    return UserService()
+    return UserService(UserRepository) 
 
-@router.post("/users/")
-def crea_user_endpoint(
-    user_data: UserDTO,
-    user_service: UserService = Depends(get_user_service)
-):
-    # The controller layer delegates logic to the service layer
-    result = user_service.get_user(user_data.id)
-    return result
+@router.get('/users', response_model=List[user_dto.UserDTO])
+def test_users(db: Session = Depends(get_db), user_service: UserService = Depends(get_user_service)):
+
+    users = db.query(User).all()
+    # user_service.get_users()
+
+    return users
+
+# @router.post("/users/")
+# def get_user_endpoint(
+#     user_data: UserDTO,
+#     user_service: UserService = Depends(get_user_service)
+# ):
+    
+
+
+#     # The controller layer delegates logic to the service layer
+#     result = user_service.get_user(user_data.id)
+#     return result
