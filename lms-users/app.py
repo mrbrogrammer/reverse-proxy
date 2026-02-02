@@ -1,30 +1,17 @@
 from fastapi import Depends, FastAPI, Request
 import uvicorn
 from sqlalchemy.ext.asyncio import AsyncSession
-from .database import get_async_db
-from router import users
+from config.database import get_db
+from router.users_route import router
+from config.database import Base
+from config.database import engine
 
 app = FastAPI()
 
-USERS = ["L4", "L2"]
+Base.metadata.create_all(bind=engine)
 
-@app.get("/users")
-async def users(request: Request, db: AsyncSession = Depends(get_async_db)):
 
-    get_users_query = await db.execute("SELECT * FROM users")
-    users = get_users_query.fetchall()
-    print(users)
-
-    if "gateway-jwt-token" not in request.headers:
-        return {
-            "unauthorized" : "Unauthorized access"
-        }
-    
-    return {
-        "users" : USERS
-    }
-
-app.include_router(users.router)
+app.include_router(router)
     
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8001)
