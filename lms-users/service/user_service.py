@@ -6,8 +6,9 @@ class UserService:
     def __init__(self, repository: UserRepository):
         self.repository = repository
         
-    def get_user(self, user_id: int) -> Optional[UserDTO]:
-            return self.repository.get_by_id(user_id)
+    def get_users(self) -> List[UserDTO]:
+        users = self.repository.get_users()
+        return users
     
     def create_user(self, name: str, email: str) -> UserDTO:
         user = UserDTO(name=name, email=email)
