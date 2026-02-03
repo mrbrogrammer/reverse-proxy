@@ -11,21 +11,21 @@ from domain.dto import user_dto
 from domain.dto import user_dto
 from domain.user import User
 from fastapi import APIRouter
-from repository.user_repository import UserRepository
+from repository.sql_alchemy_product_repository import SqlAlchemyUserRepository
 from config.database import get_db
 
 router = APIRouter(tags=["users"])
 
-def get_user_service():
-    return UserService(UserRepository) 
+def get_user_service(db: Session = Depends(get_db)):
+    return UserService(SqlAlchemyUserRepository(db))
 
 @router.get('/users', response_model=List[user_dto.UserDTO])
 def test_users(db: Session = Depends(get_db), user_service: UserService = Depends(get_user_service)):
 
-    users = db.query(User).all()
-    # user_service.get_users()
 
-    return users
+    users = user_service.get_users()
+    user_dto_list = [user_dto.UserDTO.from_orm(user) for user in users]
+    return user_dto_list
 
 # @router.post("/users/")
 # def get_user_endpoint(

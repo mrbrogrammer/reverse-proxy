@@ -1,9 +1,9 @@
-from repository.user_repository import UserRepository
+from repository.sql_alchemy_product_repository import SqlAlchemyUserRepository
 from domain.dto.user_dto import UserDTO
 from typing import List, Optional
 
 class UserService:
-    def __init__(self, repository: UserRepository):
+    def __init__(self, repository: SqlAlchemyUserRepository):
         self.repository = repository
         
     def get_users(self) -> List[UserDTO]:
