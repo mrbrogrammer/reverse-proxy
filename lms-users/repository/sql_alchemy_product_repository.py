@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from domain.dto.user_dto import UserDTO
+from domain.user import User
 from repository.user_repository import UserRepository
 from typing import List, Optional
 
@@ -7,8 +8,8 @@ class SqlAlchemyUserRepository(UserRepository):
     def __init__(self, session: Session):
         self.session = session
 
-    def get_users(self) -> List[UserDTO]:
-        return self.session.query(UserDTO).all
+    def get_users(self) -> List[User]:
+        return self.session.query(User).all()
 
     def get_by_id(self, user_id: int) -> Optional[UserDTO]:
         return self.session.query(UserDTO).filter(UserDTO.id == user_id).first()
