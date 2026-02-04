@@ -10,6 +10,10 @@ class UserService:
         users = self.repository.get_users()
         return users
     
+    def get_user(self, user_id: int) -> Optional[UserDTO]:
+        user = self.repository.get_user(user_id)
+        return user
+
     def create_user(self, name: str, email: str) -> UserDTO:
         user = UserDTO(name=name, email=email)
         self.repository.add(user)

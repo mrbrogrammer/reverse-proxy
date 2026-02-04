@@ -11,8 +11,11 @@ class SqlAlchemyUserRepository(UserRepository):
     def get_users(self) -> List[User]:
         return self.session.query(User).all()
 
-    def get_by_id(self, user_id: int) -> Optional[UserDTO]:
-        return self.session.query(UserDTO).filter(UserDTO.id == user_id).first()
+    def get_user_by_id(self, user_id: int) -> Optional[User]:
+        user = self.session.query(User).filter(User.id == user_id).first()
+        if user:
+            return User.from_orm(user)
+        return None
     
     def add(self, user: UserDTO) -> None:
         self.session.add(user)
