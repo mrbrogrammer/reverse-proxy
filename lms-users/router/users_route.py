@@ -21,20 +21,13 @@ def get_user_service(db: Session = Depends(get_db)):
 
 @router.get('/users', response_model=List[user_dto.UserDTO])
 def test_users(db: Session = Depends(get_db), user_service: UserService = Depends(get_user_service)):
-
-
     users = user_service.get_users()
     user_dto_list = [user_dto.UserDTO.from_orm(user) for user in users]
     return user_dto_list
 
-# @router.post("/users/")
-# def get_user_endpoint(
-#     user_data: UserDTO,
-#     user_service: UserService = Depends(get_user_service)
-# ):
-    
-
-
-#     # The controller layer delegates logic to the service layer
-#     result = user_service.get_user(user_data.id)
-#     return result
+@router.get('/users/{user_id}', response_model=user_dto.UserDTO)
+def get_user_by_id(user_id: int, db: Session = Depends(get_db), user_service: UserService = Depends(get_user_service)):
+    user = user_service.get_user(user_id)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    return user_dto.UserDTO.from_orm(user)
