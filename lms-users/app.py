@@ -1,7 +1,6 @@
 from fastapi import Depends, FastAPI, Request
 import uvicorn
 from sqlalchemy.ext.asyncio import AsyncSession
-from config.database import get_db
 from router.users_route import router
 from config.database import Base
 from config.database import engine

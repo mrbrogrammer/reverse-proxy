@@ -13,12 +13,20 @@ app = FastAPI()
 async def gateway_route(request: Request, service_url: str, router: UsersRouter = Depends(UsersRouter)):
     response = await router.get_user(request=request)
     return response
+
+
     # try:
     
     # except RouterNotFoundException as rnf:
     #     return {
     #         "unauthorized" : "No such route"
     #     }
+
+app = FastAPI()
+
+Base.metadata.create_all(bind=engine)
+
+app.include_router(router)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

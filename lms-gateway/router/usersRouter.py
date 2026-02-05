@@ -11,9 +11,7 @@ class UsersRouter:
             "endpoints": {
                 "/users": {
                     "methods": ["GET", "POST"],
-                    # backend could be load balancer OR a list of backends registered automatically
-                    # through a service discovery mechanism
-                    "service": "http://localhost:8001" # Load balancing by service
+                    "service": "http://localhost:8001"
                 }
             },
         }
