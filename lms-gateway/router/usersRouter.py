@@ -31,7 +31,7 @@ class UsersRouter:
         headers["gateway-jwt-token"] = "Some Security Header"
         # Route the request
         print("Routing request to path:", path)
-        is_users_path = any(path.startswith(endpoint) for endpoint in self.config["endpoints"].keys())
+        is_users_path = any(path.startswith(endpoint.split("/")[0]) for endpoint in self.config["endpoints"].keys())
         print("Is users path:", is_users_path)
         
         base_url = self.config["endpoints"][path]["service"] + path
